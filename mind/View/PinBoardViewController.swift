@@ -29,6 +29,7 @@ class PinBoardViewController: UIViewController {
             self.collection.dataSource = self.dataSource
             self.collection.delegate = self.dataSource
             self.dataSource.data.addAndNotify(observer: self) { [weak self] _ in
+                self?.refreshControl.endRefreshing()
                 self?.collection.reloadData()
             }
             
@@ -46,7 +47,6 @@ class PinBoardViewController: UIViewController {
         
         @objc func refresh(sender:AnyObject) {
             CacheManager.sharedInstance.clearCache()
-    //        items.removeAll()
             collection.reloadData()
             self.viewModel.fetchData()
         }
